@@ -4,16 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 Map Voting</title>
+    <title>CS2 Premier Map Voting</title>
     <style>
         /* Add your CSS styles here */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #000;
+            color: #ffd700; /* Yellow text color */
+        }
+
+        h1 {
+            color: #ffd700; /* Yellow header text color */
         }
 
         .map-container {
             text-align: center;
+            color: #fff; /* White text color for map information */
         }
 
         .map-card {
@@ -22,18 +29,36 @@
             border: 1px solid #ddd;
             padding: 10px;
             margin-bottom: 20px;
+            background-color: #111; /* Dark background color */
         }
 
         .vote-form {
             text-align: center;
             margin-top: 20px;
         }
+
+        select {
+            background-color: #333; /* Dark background color for select element */
+            color: #ffd700; /* Yellow text color for select options */
+        }
+
+        button {
+            background-color: #ffd700; /* Yellow background color for the button */
+            color: #000; /* Black text color for the button */
+            padding: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ffc107; /* Darker yellow on hover */
+        }
     </style>
 </head>
 
 <body>
 
-    <h1>CS2 Map Voting</h1>
+    <h1>CS2 Premier Map Voting</h1>
 
     <div class="map-container" id="mapContainer"></div>
     <button onclick="submitVotes()">Submit Votes</button>
@@ -41,9 +66,13 @@
     <script>
         // Add your JavaScript functions here
         const maps = [
-            { id: 1, src: 'map1.jpg' },
-            { id: 2, src: 'map2.jpg' },
-            // Add more maps as needed
+            { id: 1, name: 'de_dust2', src: 'de_dust2.jpg' },
+            { id: 2, name: 'de_inferno', src: 'de_inferno.jpg' },
+            { id: 3, name: 'de_mirage', src: 'de_mirage.jpg' },
+            { id: 4, name: 'de_nuke', src: 'de_nuke.jpg' },
+            { id: 5, name: 'de_overpass', src: 'de_overpass.jpg' },
+            { id: 6, name: 'de_train', src: 'de_train.jpg' },
+            { id: 7, name: 'de_vertigo', src: 'de_vertigo.jpg' }
         ];
 
         let currentMapIndex = 0;
@@ -63,8 +92,8 @@
             const mapContainer = document.getElementById('mapContainer');
             mapContainer.innerHTML = `
                 <div class="map-card">
-                    <img src="${map.src}" alt="CS2 Map ${map.id}" width="150">
-                    <p>CS2 Map ${map.id}</p>
+                    <img src="${map.src}" alt="${map.name}" width="150">
+                    <p>${map.name}</p>
                     <div class="vote-form">
                         <label for="score">Vote: </label>
                         <select id="score" name="score" onchange="updateSelectedScore(this.value)">
@@ -88,7 +117,7 @@
         function submitVotes() {
             if (selectedScore) {
                 // Implement the logic to store the selectedScore for the current map
-                alert(`Vote submitted for Map ${maps[currentMapIndex - 1].id}: ${selectedScore}`);
+                alert(`Vote submitted for ${maps[currentMapIndex - 1].name}: ${selectedScore}`);
                 selectedScore = null;
                 showNextMap();
             } else {
