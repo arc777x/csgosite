@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS2 Premier Map Voting</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #000;
+            color: #ffd700; /* Yellow text color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Ensure the container takes the full height of the viewport */
+        }
+
+        h1 {
+            color: #ffd700; /* Yellow header text color */
+        }
+
+        .map-container {
+            text-align: center;
+            color: #fff; /* White text color for map information */
+        }
+
+        .map-card {
+            width: 200px;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #111; /* Dark background color */
+        }
+
+        .vote-form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        select {
+            background-color: #333; /* Dark background color for select element */
+            color: #ffd700; /* Yellow text color for select options */
+        }
+
+        button {
+            background-color: #ffd700; /* Yellow background color for the button */
+            color: #000; /* Black text color for the button */
+            padding: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ffc107; /* Darker yellow on hover */
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>CS2 Premier Map Voting</h1>
+
+    <div class="map-container" id="mapContainer"></div>
+    <button onclick="submitVotes()">Submit Votes</button>
+
+    <script>
+        // Add your JavaScript functions here
+        const maps = [
+            { id: 1, name: 'de_dust2', src: 'de_dust2.jpg' },
+            { id: 2, name: 'de_inferno', src: 'de_inferno.jpg' },
+            { id: 3, name: 'de_mirage', src: 'de_mirage.jpg' },
+            { id: 4, name: 'de_nuke', src: 'de_nuke.jpg' },
+            { id: 5, name: 'de_overpass', src: 'de_overpass.jpg' },
+            { id: 6, name: 'de_train', src: 'de_train.jpg' },
+            { id: 7, name: 'de_vertigo', src: 'de_vertigo.jpg' }
+        ];
+
+        let currentMapIndex = 0;
+        let selectedScore;
+        let scoreOptions = [1, 2, 3, 4, 5, 6, 7];
+
+        function showNextMap() {
+            if (currentMapIndex < maps.length) {
+                const currentMap = maps[currentMapIndex];
+                displayMap(currentMap);
+                currentMapIndex++;
+            } else {
+                alert('All maps have been voted on!');
+            }
+        }
+
+        function displayMap(map) {
+            const mapContainer = document.getElementById('mapContainer');
+            mapContainer.innerHTML = `
+                <div class="map-card">
+                    <img src="${map.src}" alt="${map.name}" width="150">
+                    <p>${map.name}</p>
+                    <div class="vote-form">
+                        <label for="score">Vote: </label>
+                        <select id="score" name="score" onchange="updateSelectedScore(this.value)">
+                            ${scoreOptions.map(option => `<option value="${option}">${option}</option>`).join('')}
+                        </select>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateSelectedScore(score) {
+            selectedScore = score;
+        }
+
+        function submitVotes() {
+            if (selectedScore) {
+                // Implement the logic to store the selectedScore for the current map
+                alert(`Vote submitted for ${maps[currentMapIndex - 1].name}: ${selectedScore}`);
+                selectedScore = null;
+
+                // Remove the used score from the options
+                scoreOptions = scoreOptions.filter(option => option !== parseInt(selectedScore));
+
+                showNextMap();
+            } else {
+                alert('Please select a score before submitting.');
+            }
+        }
+
+        // Initial display
+        showNextMap();
+    </script>
+
+</body>
+
+</html>
