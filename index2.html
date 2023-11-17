@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS2 Map Voting</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .map-container {
+            text-align: center;
+        }
+
+        .map-card {
+            width: 200px;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .vote-form {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>CS2 Map Voting</h1>
+
+    <div class="map-container" id="mapContainer"></div>
+    <button onclick="submitVotes()">Submit Votes</button>
+
+    <script>
+        // Add your JavaScript functions here
+        const maps = [
+            { id: 1, src: 'map1.jpg' },
+            { id: 2, src: 'map2.jpg' },
+            // Add more maps as needed
+        ];
+
+        let currentMapIndex = 0;
+        let selectedScore;
+
+        function showNextMap() {
+            if (currentMapIndex < maps.length) {
+                const currentMap = maps[currentMapIndex];
+                displayMap(currentMap);
+                currentMapIndex++;
+            } else {
+                alert('All maps have been voted on!');
+            }
+        }
+
+        function displayMap(map) {
+            const mapContainer = document.getElementById('mapContainer');
+            mapContainer.innerHTML = `
+                <div class="map-card">
+                    <img src="${map.src}" alt="CS2 Map ${map.id}" width="150">
+                    <p>CS2 Map ${map.id}</p>
+                    <div class="vote-form">
+                        <label for="score">Vote: </label>
+                        <select id="score" name="score" onchange="updateSelectedScore(this.value)">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateSelectedScore(score) {
+            selectedScore = score;
+        }
+
+        function submitVotes() {
+            if (selectedScore) {
+                // Implement the logic to store the selectedScore for the current map
+                alert(`Vote submitted for Map ${maps[currentMapIndex - 1].id}: ${selectedScore}`);
+                selectedScore = null;
+                showNextMap();
+            } else {
+                alert('Please select a score before submitting.');
+            }
+        }
+
+        // Initial display
+        showNextMap();
+    </script>
+
+</body>
+
+</html>
